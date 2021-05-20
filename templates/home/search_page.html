@@ -1,0 +1,253 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block sitelogo %}
+    <meta itemprop="image", property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:image:width" content="1277">
+    <meta property="og:image:height" content="473">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linocinema.com/">
+{% endblock %}
+{% block description %}
+    <meta property="og:description" content="Search of movies, tvshows, users, staffs and lot more from linocinema." />
+	<meta itemprop="description" name="description" content="Search of movies, tvshows, users, staffs and lot more from linocinema." />
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" content="latest, series, new, fast, easy, adsfree, low, mb, linocinema, movies, tvshows, nigerian, open, explore" />
+{% endblock %}
+{% block toplink %}
+    <style>
+		body {
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 60%, #000000 100%), url("{% static 'images/search.jpg' %}") !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			background-attachment: scroll !important;
+			background-size: cover !important;
+		}
+	</style>
+{% endblock %}
+{% block title %}
+    <meta property="og:title" content="LinoCinema||Search {{ search_queries }}">
+    <title>LinoCinema||Search {{ search_queries }}</title>
+{% endblock %}
+
+{% block content %}
+    <section>
+        {% if search_results %}
+            <!-- valid search section -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-sm-12 text-center text-white">
+                        <h6>
+                            <span class="material-icons align-bottom">search</span> Your Search On <b class="text-warning">"{{ search_queries }}"</b>
+                        </h6>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    {% for search_result in search_results %}
+                        {% if search_result.permission %}
+                            {% if search_result.permission == 1 %}
+                                <div class="col-6 col-md-2 text-capitalize">
+                                    <div class="card card-small-h border border-white">
+                                        <a href="{% url 'movies_detail_page' pk=search_result.id %}" class="img-custom-fluid">
+                                            {% if search_result.image_link != "None" %}
+                                                <img src="{{ search_result.image_link }}" loading="lazy" alt="{{ search_result.title }} image" width="100%" height="100%">
+                                            {% else %}
+                                                <img src="{{ search_result.image.url }}" loading="lazy" alt="{{ search_result.title }} image" width="100%" height="100%">
+                                            {% endif %}
+                                            <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                                        </a>
+                                        <div class="card-head">
+                                            <span class="card-480p">
+                                                480p
+                                            </span>
+                                            <span class="card-mb">
+                                                {{ search_result.mb }}mb
+                                            </span>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="{% url 'movies_detail_page' pk=search_result.id %}">{{ search_result.title|truncatechars:20 }}</a>
+                                            <div class="card-tag">
+                                                <span>movies, {{ search_result.genre }}</span>
+                                            </div>
+                                            <div class="card-year">
+                                                <span class="material-icons align-bottom md-18 text-warning">query_builder</span>
+                                                <span class="text-white">{{ search_result.year }}</span>
+                                            </div>
+                                            <div class="card-rating">
+                                                <span class="imdb">
+                                                    <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ search_result.rate }}" data-style="p4">
+                                                        <a href="https://www.imdb.com/title/{{ search_result.rate }}/?ref_=plg_rt_1"></a>
+                                                    </span>
+                                                    <script>
+                                                        (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                    </script>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% elif search_result.username %}
+                            <div class="col-12 col-md-3 mt-1">
+                                <p class="alert alert-white bg-white text-black border-none">
+                                    {% if search_result.is_staff %}
+                                        <b>Staff:</b>
+                                    {% else %}
+                                        <b>User:</b>
+                                    {% endif %}
+                                    <a class="text-black" href="#" data-toggle="modal" data-target="#userSearchInfoModal">
+                                        {{ search_result.username }}
+                                    </a>
+                                    <br/>
+                                    <b>Status</b>
+                                    {% if search_result.is_active %}
+                                        <i class="text-success">active</i>
+                                    {% else %}
+                                        <i class="text-danger">inactive</i>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="modal fade text-black" id="userSearchInfoModal" tabindex="-1" role="dialog" aria-labelledby="userSearchInfoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content border-none">
+                                        <div class="modal-header justify-content-center">
+                                            <h6 class="modal-title text-center" id="userSearchInfoModalLabel">
+                                                <span class="material-icons align-bottom">account_circle</span>
+                                                User
+                                            </h6>
+                                        </div>
+                                        <div style="text-transform: none;" class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    Can't display users info at the Moment!!!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-6 col-md-2 text-capitalize">
+                                <div class="card card-small-h border border-white">
+                                    <a href="{% url 'tvshows_detail_page' pk=search_result.id %}" class="img-custom-fluid">
+                                        {% if search_result.image_link != "None" %}
+                                            <img src="{{ search_result.image_link }}" loading="lazy" alt="{{ search_result.title }} image" width="100%" height="100%">
+                                        {% else %}
+                                            <img src="{{ search_result.image.url }}" loading="lazy" alt="{{ search_result.title }} image" width="100%" height="100%">
+                                        {% endif %}
+                                        <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                                    </a>
+                                    <div class="card-head">
+                                        <span class="card-480p">
+                                            480p
+                                        </span>
+                                        <span class="card-mb">
+                                            <span class="material-icons align-bottom">tv</span>tv
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="{% url 'tvshows_detail_page' pk=search_result.id %}">{{ search_result.title|truncatechars:20 }}</a>
+                                        <div class="card-tag">
+                                            <span>tvshow, {{ search_result.genre }}</span>
+                                        </div>
+                                        <div class="card-year">
+                                            <span class="material-icons align-bottom md-18 text-warning">query_builder</span>
+                                            <span class="text-white">{{ search_result.year }}</span>
+                                        </div>
+                                        <div class="card-rating">
+                                            <span class="imdb">
+                                                <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ search_result.rate }}" data-style="p4">
+                                                    <a href="https://www.imdb.com/title/{{ search_result.rate }}/?ref_=plg_rt_1"></a>
+                                                </span>
+                                                <script>
+                                                    (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                </script>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <!-- invalid search section -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-12 text-center text-white">
+                        <span class="material-icons align-bottom text-150 text-danger">search</span>
+                        <h6>
+                            Search on <b class="text-danger">"{{ search_queries }}"</b> Not Found!
+                        </h6>
+                        <h6>
+                            TRY
+                            <p class="alert alert-info border-none" style="font-size: 14px;">
+                                Request for the movie or tvshow you could not find. Your request will be reviewed within
+                                2 to 3 working days and the movie or will be added to linocinema.
+                                <br/>
+                                <b>Thanks for understanding.</b>
+                            </p>
+                            <form action="{% url 'request_page' %}">
+                                <button type="submit" class="btn btn-md text-black bg-white border-none">
+                                    Request
+                                </button>
+                            </form>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="container mt-2">
+            <div class="row justify-content-center text-capitalize">
+                <div class="col-sm-6 text-center text-white">
+                    <div class="alert alert-warning border-none">
+                        <h5>
+                            <b>Weekly Top Search</b>
+                        </h5>
+                        <a class="btn btn-warning text-black btn-md border-none" data-toggle="modal" data-target="#topSearch">
+                            "{{ max_search_query }}"
+                        </a>
+                        with
+                        <b>
+                            "{{ max_value }}"
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade text-black" id="topSearch" tabindex="-1" role="dialog" aria-labelledby="topSearchLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content border-none">
+                    <div class="modal-header justify-content-center">
+                        <h5 class="modal-title text-center" id="topSearchLabel">
+                            <span class="material-icons align-bottom">search</span>
+                            Top Search
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 text-center">
+                                <p>
+                                    This is the weekly most searched keyword value
+                                    in LinoCinema's search bar(SEO). <b class="text-danger">This reset Weekly!!</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-none">
+                        <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

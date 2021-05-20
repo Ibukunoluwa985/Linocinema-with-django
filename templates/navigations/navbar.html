@@ -1,0 +1,19 @@
+{% load static %}
+<!-- navbar -->
+<div class="alert bg-white fade show border-none p-0 m-0 text-center" role="alert">
+	Download the
+	<a href="{% static 'app/linocinema.apk' %}" class="btn btn-md bg-black text-white font-weight-bold">LinoCinema App</a>
+	only for android.
+</div>
+<div class="text-center navbar-container d-flex h-100 p-3 mx-auto flex-column">
+	{% include 'navigations/navbar_links.html' %}
+
+	{% if request.get_full_path == '/' or request.get_full_path == '/movies/' or request.get_full_path == '/tvshows/' or request.get_full_path == '/explore/' or 'search' in request.get_full_path%}
+		<form action="{% url 'search_page' %}" class="searchbar mt-2">
+			<input id="id_search" type="text" name="search" value="{{ request.GET.search }}" required="required" class="nav-transparent col-10 shadow-none text-center border-0" placeholder="Search, movies, tvshows, users, staffs..." aria-label="Search" style="outline:none;">
+			<button class="btn search_icon" type="submit">
+				<span class="material-icons align-bottom">search</span>
+			</button>
+		</form>
+	{% endif %}
+</div>

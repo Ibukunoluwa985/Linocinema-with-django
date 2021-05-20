@@ -1,0 +1,149 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block sitelogo %}
+    <meta itemprop="image", property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:image:width" content="1277">
+    <meta property="og:image:height" content="473">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linocinema.com/">
+{% endblock %}
+{% block description %}
+    <meta property="og:description" content="Get free new, trending and hot tvshows on linocinema with an Mb range of 50Mb-150Mb with 100Mb on average." />
+	<meta itemprop="description" name="description" content="Get free new, trending and hot tvshows on linocinema with an Mb range of 50Mb-150Mb with 100Mb on average." />
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" content="latest, series, new, fast, easy, adsfree, low, mb, linocinema, tvshows, tvshows, nigerian, open, explore" />
+{% endblock %}
+{% block toplink %}
+    <style>
+		body {
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 60%, #000000 100%), url("{% static 'images/tvshows.jpg' %}") !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			background-attachment: scroll !important;
+			background-size: cover !important;
+		}
+	</style>
+{% endblock %}
+{% block title %}
+    <meta property="og:title" content="LinoCinema||Tvshows">
+    <title>LinoCinema||Tvshows</title>
+{% endblock %}
+{% block schema %}
+    <script type="application/ld+json">
+        [{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://www.linocinema.com/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Tvshows",
+				"item": "https://www.linocinema.com/tvshows/"
+			}]
+		}]
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 text-center text-white">
+                    <h4>
+                        <span class="material-icons align-bottom">tv</span> <b>Tvshows</b>
+                    </h4>
+                </div>
+                {% for tvshow in tvshows %}
+                    <div class="col-6 col-md-2 text-capitalize">
+                        <div class="card card-small-h border border-white">
+                            <a href="{% url 'tvshows_detail_page' pk=tvshow.id %}" class="img-custom-fluid">
+                                {% if tvshow.image_link != "None" %}
+                                    <img src="{{ tvshow.image_link }}" loading="lazy" alt="{{ tvshow.title }} image" width="100%" height="100%">
+                                {% else %}
+                                    <img src="{{ tvshow.image.url }}" loading="lazy" alt="{{ tvshow.title }} image" width="100%" height="100%">
+                                {% endif %}
+                                <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                            </a>
+                            <div class="card-head">
+                                <span class="card-480p">
+                                    480p
+                                </span>
+                                <span class="card-mb">
+                                    <span class="material-icons align-bottom">tv</span>tv
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'tvshows_detail_page' pk=tvshow.id %}">{{ tvshow.title|truncatechars:20 }}</a>
+                                <div class="card-tag">
+                                    <span>tvshow, {{ tvshow.genre }}</span>
+                                </div>
+                                <div class="card-year">
+                                    <span class="material-icons align-bottom md-18 text-warning">query_builder</span>
+                                    <span class="text-white">{{ tvshow.year }}</span>
+                                </div>
+                                <div class="card-rating">
+                                    <span class="imdb">
+                                        <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ tvshow.rate }}" data-style="p4">
+                                            <a href="https://www.imdb.com/title/{{ tvshow.rate }}/?ref_=plg_rt_1"></a>
+                                        </span>
+                                        <script>
+                                            (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                        </script>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-6 text-center">
+                    <div class="mt-1">
+                        <ul class="pagination justify-content-center">
+                            {% if tvshows.has_previous %}
+                                <li><a href="?page={{ tvshows.previous_page_number }}" class="text-black"><span class="material-icons align-bottom">chevron_left</span></a></li>
+                            {% else %}
+                                <li class="disabled"><span class="material-icons align-bottom">chevron_left</span></li>
+                            {% endif %}
+
+                            {% if tvshows.number|add:'-4' > 1 %}
+                                <li><a href="?page={{ tvshows.number|add:'-5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% for i in tvshows.paginator.page_range %}
+                                {% if tvshows.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% elif i > tvshows.number|add:'-5' and i < tvshows.number|add:'5' %}
+                                    <li><a href="?page={{ i }}" style="padding: 5px;">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if tvshows.paginator.num_pages > tvshows.number|add:'4' %}
+                                <li><a href="?page={{ tvshows.number|add:'5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% if tvshows.has_next %}
+                                <li><a href="?page={{ tvshows.next_page_number }}" class="text-black"><span class="material-icons align-bottom">chevron_right</span></a></li>
+                            {% else %}
+                                <li class="disabled"><span class="material-icons align-bottom">chevron_right</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

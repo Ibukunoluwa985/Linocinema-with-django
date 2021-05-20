@@ -1,0 +1,291 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block sitelogo %}
+    <meta itemprop="image", property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:image:width" content="1277">
+    <meta property="og:image:height" content="473">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linocinema.com/">
+{% endblock %}
+{% block description %}
+    <meta property="og:description" content="Login to linocinema to get update on new movies and tvshows and also win events." />
+	<meta itemprop="description" name="description" content="Login to linocinema to get update on new movies and tvshows and also win events." />
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" content="latest, series, new, fast, easy, adsfree, low, mb, linocinema, movies, tvshows, nigerian, open, explore" />
+{% endblock %}
+{% block toplink %}
+    <style>
+		body {
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 60%, #000000 100%), url("{% static 'images/authentication.jpg' %}") !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			background-attachment: scroll !important;
+			background-size: cover !important;
+		}
+	</style>
+{% endblock %}
+{% block title %}
+    <meta property="og:title" content="LinoCinema||{{ user.username }}">
+    <title>LinoCinema||{{ user.username }}</title>
+{% endblock %}
+{% block schema %}
+    <script type="application/ld+json">
+        [{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://www.linocinema.com/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "User",
+				"item": "https://www.linocinema.com/user/"
+			}]
+		}]
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-sm-12 text-center text-white">
+                    <h4><b>User</b></h4>
+                </div>
+                <div class="col-sm-6 detail-container text-white">
+                    <div class="col-sm-12">
+                        <h4 class="text-center">User Info Zone</h4>
+                    </div>
+                    <h6><b>Username: {{ request.user.username }}</b></h6>
+                    <h6>
+                        <b>First Name:</b> 
+                        {% if request.user.first_name %}
+                            {{ request.user.first_name }}
+                        {% else %}
+                            <form style="display: inline;" action="{% url 'update_first_name' %}" method="POST">
+                                {% csrf_token %}
+                                {% for field in update_first_name_form %}
+                                    <div class="col-sm-6 form-group">
+                                        {{ field|add_class:'form-control-custom inline'}}
+                                        {% for error in field.errors %}
+                                            <i class="text-danger">{{ error }}</i>
+                                        {% endfor %}
+                                        <button class="btn btn-sm home-card-btn">
+                                            update
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        {% endif %}
+                    </h6>
+                    <h6>
+                        <b>Last Name:</b> 
+                        {% if request.user.last_name %}
+                            {{ request.user.last_name }}
+                        {% else %}
+                            <form style="display: inline;" action="{% url 'update_last_name' %}" method="POST">
+                                {% csrf_token %}
+                                {% for field in update_last_name_form %}
+                                    <div class="col-sm-6 form-group">
+                                        {{ field|add_class:'form-control-custom inline'}}
+                                        {% for error in field.errors %}
+                                            <i class="text-danger">{{ error }}</i>
+                                        {% endfor %}
+                                        <button class="btn btn-sm home-card-btn">
+                                            update
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        {% endif %}
+                    </h6>
+                    <h6><b>Email:</b> {{ request.user.email }}</h6>
+                    <div class="col-sm-12">
+                        <h4 class="text-center">Status Info Zone</h4>
+                    </div>
+                    <h6>
+                        <b>Status:</b> 
+                        {% if request.user.is_active %}
+                            <b class="text-success">active</b>
+                        {% else %}
+                            <b class="text-danger">inactive</b>
+                        {% endif %}
+                    </h6>
+                    <h6>
+                        <b>Staff:</b>
+                        {% if request.user.is_staff %}
+                            <b class="text-success">staff</b>
+                        {% else %}
+                            <b class="text-danger">user</b>
+                        {% endif %}
+                    </h6>
+                    <h6>
+                        <b>Admin Staff:</b>
+                        {% if request.user.is_superuser %}
+                            <b class="text-success">staff</b>
+                        {% else %}
+                            <b class="text-danger">user</b>
+                        {% endif %}
+                    </h6>
+                    <h6>
+                        <b>Account access point:</b> 
+                        {% if perms.users.user %}
+                            <b class="text-success">granted</b>
+                        {% else %}
+                            <b class="text-danger">not granted</b>
+                        {% endif %}
+                    </h6>
+                    <h6><b>Last Login:</b> {{ request.user.last_login|naturaltime }}</h6>
+                    <h6><b>Account created on:</b> {{ request.user.date_joined|naturaltime }}</h6>
+                    <div class="col-sm-12">
+                        <h4 class="text-center">Security Info Zone</h4>
+                    </div>
+                    <h6>
+                        <b>Password:</b> 
+                        <p class="alert alert-danger border-none">
+                            Password is encryted and hash due to security reasons.
+                            <button class="btn btn-md bg-danger btn-danger home-card-btn" data-toggle="modal" data-target="#passwordAlertModal">
+                                Show
+                            </button>
+                            <div class="modal fade text-black" id="passwordAlertModal" tabindex="-1" role="dialog" aria-labelledby="passwordAlertModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content border-none">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title text-center" id="passwordAlertModalLabel">
+                                                <i class="fa fa-key"></i>
+                                                Security
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body justify-content-center">
+                                            <p class="text-center">
+                                                Due to high security reasons, we decided not to display 
+                                                your password in plain text or the encryted version.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer border-none">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                        <b>Logout:</b> <a href="{% url 'user_logout' %}">logout</a>
+                    </h6>
+                </div>
+                <div class="col-sm-6 text-danger">
+                    <div class="col-sm-12">
+                        <h4 class="text-center">Danger Zone</h4>
+                    </div>
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12 text-center">
+                            <p class="alert alert-warning border-none">
+                                Disactivating user account will not remove any previous action or actions done by you.
+                                You can also request for account reactivation at anytime. May take a min to 2 weeks before
+                                account reactivation depending on the system queue. We highly recommend disactivating account.
+                            </p>
+                            <form style="display: inline;" action="{% url 'disactivate_user' %}" method="POST">
+                                {% csrf_token %}
+                                {% for field in disactivate_user_form %}
+                                    <div class="col-sm-6 form-group">
+                                        {{ field|add_class:'form-control-custom inline'}}
+                                        {% for error in field.errors %}
+                                            <i class="text-danger">{{ error }}</i>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                                <button class="btn btn-lg bg-warning btn-warning home-card-btn">
+                                    Disactivate User
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12 text-center">
+                            <p class="alert alert-danger border-none">
+                                Deleting user account will remove any previous action or actions done by you.
+                                You can not request for account reactivation as the user will be remove from our
+                                database forever. We highly recommend disactivating account.
+                            </p>
+                            {% if request.user.is_superuser and request.user.is_authenticated %}
+                                <button class="btn btn-lg bg-danger btn-danger home-card-btn" disabled>
+                                    Delete User
+                                </button>
+                            {% else %}
+                                <button class="btn btn-lg bg-danger btn-danger home-card-btn" data-toggle="modal" data-target="#deleteAccountModal">
+                                    Delete User
+                                </button>
+                            {% endif %}
+                            <div class="modal fade text-black" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content border-none">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title text-center" id="deleteAccountModalLabel">
+                                                <i class="fa fa-unlink"></i>
+                                                Warning
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body justify-content-center">
+                                            <p class="text-center">
+                                                Deleting user account will remove any previous action or actions done by you.
+                                                Are you 100% sure you will like to continue?
+                                            </p>
+                                            <form style="display: inline;" action="{% url 'delete_user' %}" method="POST">
+                                                {% csrf_token %}
+                                                <button class="btn btn-sm bg-danger btn-danger home-card-btn">
+                                                    Delete User
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer border-none">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if user.is_authenticated and user.is_active and user.is_staff or user.is_superuser %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p class="alert alert-info border-none">
+                            Use the "Emails" button to view the email control page.
+                            And the "Admin" button to view the admin control page.
+                            <br/>
+                        </p>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <form action="{% url 'emails_page' %}">
+                                        <button type="submit" class="btn btn-md bg-white border-none">
+                                            Emails
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-6">
+                                    <form action="{% url 'admin:index' %}">
+                                        <button type="submit" class="btn btn-md bg-white border-none">
+                                            Admin
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

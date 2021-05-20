@@ -1,0 +1,180 @@
+{% load static %}
+<!-- footer -->
+<footer class="footer">
+    <div class="footer-middle">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-3 col-sm-6 text-center">
+                    <div class="footer-pad">
+                        <h4>Navigation</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'landing_page' %}">Home</a></li>
+                            <li><a href="{% url 'movies_page' %}">Movies</a></li>
+                            <li><a href="{% url 'tvshows_page' %}">Tvshows</a></li>
+                            <li><a href="{% url 'explore_page' %}">Explore</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-sm-6 text-center">
+                    <div class="footer-pad">
+                        <h4>Check out</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'request_page' %}">Request</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#donationModal">Donate</a></li>
+                            <div class="modal fade" id="donationModal" tabindex="-1" role="dialog" aria-labelledby="donationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content border-none text-black">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title text-center" id="donationModalLabel">
+                                                <span class="material-icons align-bottom">volunteer_activism</span>
+                                                Donation
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-12 text-center">
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <b>Account Number:</b> 7823408297
+                                                        </li>
+                                                        <li>
+                                                            <b>Bank Name:</b> Wema Bank PLC
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-none">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <li><a href="#" data-toggle="modal" data-target="#categoriesModal">Categories</a></li>
+                            <div class="modal fade" id="categoriesModal" tabindex="-1" role="dialog" aria-labelledby="categoriesModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content border-none text-black">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title text-center" id="categoriesModalLabel">
+                                                <span class="material-icons align-bottom">category</span>
+                                                Categories
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-12 text-center">
+                                                    <ul class="list-group border-none">
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Action' %}" class="text-black">Action</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Animation' %}" class="text-black">Animation</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Crime' %}" class="text-black">Crime</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Comedy' %}" class="text-black">Comedy</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Drama' %}" class="text-black">Drama</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Documentary' %}" class="text-black">Documentary</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Family' %}" class="text-black">Family</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Horror' %}" class="text-black">Horror</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Romance' %}" class="text-black">Romance</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'categories_page' category='Sci-fi' %}" class="text-black">Sci-fi</a>
+                                                            <span class="badge badge-dark bg-black badge-pill"><span class="material-icons align-bottom">category</span></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-none">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <li><a href="{% url 'contact_page' %}">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-sm-6 text-center">
+                    <div class="footer-pad">
+                        <h4>Account</h4>
+                        <ul class="list-unstyled">
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'user_info_page' %}">{{ user.username|capfirst }}</a></li>
+                                <li><a href="{% url 'user_logout' %}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{% url 'user_login' %}">Login</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                            <li><a href="{% url 'terms_of_service' %}">Terms Of Service</a></li>
+                            <li><a href="#">DMCA</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <h4>Follow Us</h4>
+                    <ul class="social-circle list-unstyled">
+                        <div class="social d-flex justify-content-center">
+                            <!-- gmail -->
+                            <a class="mx-2" href="mailto:linocinemaelnino@gmail.com" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-lg fa-envelope"></i>
+                            </a>
+                            <!-- instagram -->
+                            <a class="mx-2" href="https://www.instagram.com/linocinema/" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-lg fa-instagram"></i>
+                            </a>
+                            <!-- facebook -->
+                            <a class="mx-2" href="https://www.facebook.com/linocinema/" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-lg fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <address>
+                        <!-- instagram ibk -->
+                        <a href="https://www.instagram.com/ibknaphtali/" target="_blank" rel="noopener noreferrer">
+                            Powered By El-nino
+                        </a>
+                    </address>
+                </div>
+                <div class="col-sm-12 text-center">
+                    <a href="//www.dmca.com/Protection/Status.aspx?ID=2a0954a9-07ee-4d11-8c9d-cbd479495f05" title="DMCA Protection" class="dmca-badge">
+                        <img src ="https://images.dmca.com/Badges/dmca_protected_26_120.png?ID=2a0954a9-07ee-4d11-8c9d-cbd479495f05"  alt="DMCA.com Protection" />
+                    </a>
+                    <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 copy">
+                    <p class="text-center">&copy; Copyright <span id="currentYear"></span> - <a href="{% url 'landing_page' %}">linocinema</a>.  All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

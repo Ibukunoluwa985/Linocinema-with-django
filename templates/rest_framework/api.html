@@ -1,0 +1,157 @@
+<!-- extending base -->
+{% extends 'rest_framework/base.html' %}
+<!-- loading static files -->
+{% load static %}
+
+<!-- blocking bootstrap_theme -->
+{% block bootstrap_theme %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+{% endblock %}
+
+<!-- blocking style -->
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css"href="/static/rest_framework/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/rest_framework/css/prettify.css">
+    <link rel="stylesheet" type="text/css" href="/static/rest_framework/css/default.css">
+    <style>
+        .highlight .hll { background-color: #ffffcc }
+        .highlight  { background: #f8f8f8; }
+        .highlight .c { color: #008800; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #AA22FF; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #008800; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #008800; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #008800 } /* Comment.Preproc */
+        .highlight .cpf { color: #008800; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #008800; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #008800; font-weight: bold } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #AA22FF; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #AA22FF; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #AA22FF; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #AA22FF } /* Keyword.Pseudo */
+        .highlight .kr { color: #AA22FF; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #00BB00; font-weight: bold } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BB4444 } /* Literal.String */
+        .highlight .na { color: #BB4444 } /* Name.Attribute */
+        .highlight .nb { color: #AA22FF } /* Name.Builtin */
+        .highlight .nc { color: #0000FF } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #00A000 } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #B8860B } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BB4444 } /* Literal.String.Affix */
+        .highlight .sb { color: #BB4444 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BB4444 } /* Literal.String.Char */
+        .highlight .dl { color: #BB4444 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BB4444; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BB4444 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BB4444 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BB4444 } /* Literal.String.Single */
+        .highlight .ss { color: #B8860B } /* Literal.String.Symbol */
+        .highlight .bp { color: #AA22FF } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #00A000 } /* Name.Function.Magic */
+        .highlight .vc { color: #B8860B } /* Name.Variable.Class */
+        .highlight .vg { color: #B8860B } /* Name.Variable.Global */
+        .highlight .vi { color: #B8860B } /* Name.Variable.Instance */
+        .highlight .vm { color: #B8860B } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+        .bg-black {background: #000000;}
+        .bg-white {background: #ffffff;}
+        .text-black {color: #000000;}
+        .text-white {color: #ffffff;}
+        .prettyprint {
+            padding: 10px;
+            background-color: #d7d7ff;
+            border: 1px solid #ffffff;
+        }
+        .btn {
+            border-radius: 0 !important;
+        }
+        .btn-primary {
+            color: #000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+        .btn-primary:hover {
+            color: #000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:focus, .btn-primary.focus {
+            color: #000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 0 0 0.2rem rgba(231, 243, 255, 0.5);
+        }
+
+        .btn-primary.disabled, .btn-primary:disabled {
+            color: #000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+        .show > .btn-primary.dropdown-toggle {
+            color: #000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+    </style>
+{% endblock %}
+
+<!-- blocking bootstrap navbar variant -->
+{% block bootstrap_navbar_variant %}
+    navbar-expand-lg navbar-light text-black bg-white fixed-top
+{% endblock %}
+
+<!-- blocking branding -->
+{% block branding %}
+    <a href="#" class="navbar-brand">
+        LinoCinema Movie List Browsable API
+    </a>
+{% endblock %}
+
+<!-- blocking bodyclass -->
+{% block bodyclass %}
+	bg-black text-white
+{% endblock %}
+
+<!-- blocking script -->
+{% block script %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="/static/rest_framework/js/ajax-form.js"></script>
+    <script src="/static/rest_framework/js/csrf.js"></script>
+	<script src="/static/rest_framework/js/bootstrap.min.js"></script>
+    <script src="/static/rest_framework/js/prettify-min.js"></script>
+    <script src="/static/rest_framework/js/default.js"></script>
+{% endblock %}

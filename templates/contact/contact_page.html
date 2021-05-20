@@ -1,0 +1,82 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block sitelogo %}
+    <meta itemprop="image", property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:image:width" content="1277">
+    <meta property="og:image:height" content="473">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linocinema.com/">
+{% endblock %}
+{% block description %}
+    <meta property="og:description" content="Can contact the linocinema team from the 'contact us' page using the form." />
+	<meta itemprop="description" name="description" content="Can contact the linocinema team from the 'contact us' page using the form." />
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" content="latest, series, new, fast, easy, adsfree, low, mb, linocinema, movies, tvshows, nigerian, open, explore" />
+{% endblock %}
+{% block toplink %}
+    <style>
+		body {
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 60%, #000000 100%), url("{% static 'images/contact.jpg' %}") !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			background-attachment: scroll !important;
+			background-size: cover !important;
+		}
+	</style>
+{% endblock %}
+{% block title %}
+    <meta property="og:title" content="LinoCinema||Contact">
+    <title>LinoCinema||Contact</title>
+{% endblock %}
+{% block schema %}
+    <script type="application/ld+json">
+        [{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://www.linocinema.com/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Contact",
+				"item": "https://www.linocinema.com/contact/"
+			}]
+		}]
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 text-center text-white">
+                    <h4>
+                        <span class="material-icons align-bottom">mail</span> <b>Contact Us</b>
+                    </h4>
+                </div>
+                <div id="contactForm" class="col-sm-6 bg-50 text-center text-white border border-white">
+                    <form action="{% url 'contact_page' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% for field in contact_us_form %}
+                                {{ field|add_class:'form-control text-center form-input'}}
+                                {% for error in field.errors %}
+                                    <i class="text-danger">{{ error }}</i>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn btn-md form-btn mb-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

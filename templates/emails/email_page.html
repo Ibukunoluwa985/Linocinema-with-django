@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block title %}
+    <meta property="og:title" content="LinoCinema||Emails">
+    <title>LinoCinema||Emails</title>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            {% if user.is_authenticated and user.is_active and user.is_staff or user.is_superuser %}
+                <div class="row justify-content-center text-white">
+                    <div class="col-sm-12 text-center">
+                        <h4>
+                            <span class="material-icons align-bottom">mail</span> <b>Emails</b>
+                        </h4>
+                    </div>
+                    {% if reachout_form %}
+                        <div class="col-sm-6 text-center border border-white p-1">
+                            <h5>Users reachout</h5>
+                            <form action="{% url 'reachout' %}" method="POST">
+                                {% csrf_token %}
+                                {% for field in reachout_form %}
+                                    {{ field|add_class:'form-control text-center form-input'}}
+                                    {% for error in field.errors %}
+                                        <i class="text-danger">{{ error }}</i>
+                                    {% endfor %}
+                                {% endfor %}
+                                <button type="submit" class="btn btn-md bg-white text-black m-1 border-none">Sent email</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-6 text-center border border-white p-1">
+                        <div class="container">
+                            <div class="row">
+                                {% if personal_reachout_form %}
+                                    <div class="col-sm-12 mb-3">
+                                        <h5 class="text-success" >Request available</h5>
+                                        <form action="{% url 'personal_reachout' %}" method="POST">
+                                            {% csrf_token %}
+                                            {% for field in personal_reachout_form %}
+                                                {{ field|add_class:'form-control text-center form-input'}}
+                                                    {% for error in field.errors %}
+                                                    <i class="text-danger">{{ error }}</i>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            <button type="submit" class="btn btn-md bg-white text-black m-1 border-none">Sent email</button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                                {% if personal_reachout_fail_form %}
+                                    <div class="col-sm-12">
+                                        <h5 class="text-danger" >Request unavailable</h5>
+                                        <form action="{% url 'personal_fail_reachout' %}" method="POST">
+                                            {% csrf_token %}
+                                            {% for field in personal_reachout_fail_form %}
+                                                {{ field|add_class:'form-control text-center form-input'}}
+                                                    {% for error in field.errors %}
+                                                    <i class="text-danger">{{ error }}</i>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            <button type="submit" class="btn btn-md bg-white text-black m-1 border-none">Sent email</button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

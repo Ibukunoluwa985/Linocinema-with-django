@@ -1,0 +1,35 @@
+{% load static %}
+<!-- navbar link -->
+<header class="masthead mb-auto">
+    <div class="inner">
+        <h4 class="masthead-brand">
+            LinoCinema
+        </h4>
+        <nav id="#links" class="nav nav-masthead justify-content-center">
+            <!-- home page -->
+            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'landing_page' %}">
+                <span class="material-icons align-bottom">home</span>
+            </a>
+            <!-- movies page -->
+            <a class="nav-link {% if request.path == '/movies/' %}active{% endif %}" href="{% url 'movies_page' %}">
+                <span class="material-icons align-bottom">movie</span>
+            </a>
+            <!-- tvshows page -->
+            <a class="nav-link {% if request.path == '/tvshows/' %}active{% endif %}" href="{% url 'tvshows_page' %}">
+                <span class="material-icons align-bottom">tv</span>
+            </a>
+            <!-- explore page -->
+            <a class="nav-link {% if request.path == '/explore/' %}active{% endif %}" href="{% url 'explore_page' %}">
+                <span class="material-icons align-bottom">explore</span>
+            </a>
+            <!-- request page -->
+            <a class="nav-link {% if request.path == '/request/' %}active{% endif %}" href="{% url 'request_page' %}">
+                <span class="material-icons align-bottom">list_alt</span>
+            </a>
+            <!-- contact page -->
+            <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact_page' %}">
+                <span class="material-icons align-bottom">mail</span>
+            </a>
+        </nav>
+    </div>
+</header>

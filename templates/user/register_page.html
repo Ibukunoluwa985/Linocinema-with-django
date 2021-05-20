@@ -1,0 +1,100 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block sitelogo %}
+    <meta itemprop="image", property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:image:width" content="1277">
+    <meta property="og:image:height" content="473">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linocinema.com/">
+{% endblock %}
+{% block description %}
+    <meta property="og:description" content="Register to linocinema to get update on new movies and tvshows and also win events." />
+	<meta itemprop="description" name="description" content="Register to linocinema to get update on new movies and tvshows and also win events." />
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" content="latest, series, new, fast, easy, adsfree, low, mb, linocinema, movies, tvshows, nigerian, open, explore" />
+{% endblock %}
+{% block toplink %}
+    <style>
+		body {
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 60%, #000000 100%), url("{% static 'images/authentication.jpg' %}") !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			background-attachment: scroll !important;
+			background-size: cover !important;
+		}
+	</style>
+{% endblock %}
+{% block title %}
+    <meta property="og:title" content="LinoCinema||Register">
+    <title>LinoCinema||Register</title>
+{% endblock %}
+{% block schema %}
+    <script type="application/ld+json">
+        [{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://www.linocinema.com/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "User",
+				"item": "https://www.linocinema.com/user/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 3,
+				"name": "Register",
+				"item": "https://www.linocinema.com/user/register/"
+			}]
+		}]
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center">
+                <div class="col-sm-5 text-center text-white align-self-center">
+                    <h1 class="title">
+                        <i style="position: absolute;" class="fas fa-user-circle"></i>
+                        <img src="{% static 'images/logo.png' %}" width="150" height="150" class="border border-white rounded-circle" loading="lazy" alt="LinoCinema logo">
+                        <h4><b>Register</b></h4>
+                    </h1>
+                    <form action="{% url 'user_register' %}" method="POST" class="mx-auto border-p-custom mt-3 border-bottom border-white">
+                        {% csrf_token %}
+                        <div class="row justify-content-center">
+                            {% for field in register_form %}
+                                <div class="col-11 col-sm-9 form-group">
+                                    {{ field|add_class:'form-control form-control-custom' }}
+                                    {% for error in field.errors %}
+                                        <i class="text-danger">{{ error }}</i>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-md bg-white text-black border-none">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <p>
+                        Have an account?
+                        <a href="{% url 'user_login' %}" class="text-warning"><strong>login here</strong></a>!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

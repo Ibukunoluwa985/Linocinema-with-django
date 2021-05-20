@@ -1,0 +1,121 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block sitelogo %}
+    <meta itemprop="image", property="og:image" content="{% static 'images/logo.png' %}">
+    <meta property="og:image:width" content="1277">
+    <meta property="og:image:height" content="473">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linocinema.com/">
+{% endblock %}
+{% block description %}
+    <meta property="og:description" content="With request a visiting or loggin user order or request for movie or tvshow that is not on linocinema." />
+	<meta itemprop="description" name="description" content="With request a visiting or loggin user order or request for movie or tvshow that is not on linocinema." />
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" content="latest, series, new, fast, easy, adsfree, low, mb, linocinema, movies, tvshows, nigerian, open, explore" />
+{% endblock %}
+{% block toplink %}
+    <style>
+		body {
+			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 60%, #000000 100%), url("{% static 'images/request.jpg' %}") !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			background-attachment: scroll !important;
+			background-size: cover !important;
+		}
+	</style>
+{% endblock %}
+{% block title %}
+    <meta property="og:title" content="LinoCinema||Request">
+    <title>LinoCinema||Request</title>
+{% endblock %}
+{% block schema %}
+    <script type="application/ld+json">
+        [{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://www.linocinema.com/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Request",
+				"item": "https://www.linocinema.com/request/"
+			}]
+		}]
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row justify-content-center text-white">
+                <div class="col-sm-12 text-center">
+                    <h4>
+                        <span class="material-icons align-bottom">list_alt</span> <b>Request</b>
+                    </h4>
+                </div>
+                <div class="col-sm-12 text-center">
+                    <p class="alert alert-info border-none" style="font-size: 14px;">
+                        Request for the movie or tvshow you could not find. Your request will be reviewed within
+                        2 to 3 working days and the movie or tvshow will be added to linocinema. This also allow users to
+                        contribute to linocinema and help in its productivity and grant way for access to large movies
+                        and tvshows database.
+                        <br/>
+                        <a href="http://www.instagram.com/linocinema/" target="_blank" rel="noopener noreferrer">
+                            <img src="{% static 'images/ig.png' %}" width="25" height="25" loading="lazy" alt="rafiqobed IG">
+                            @linocinema
+                        </a>
+                        <a href="http://www.instagram.com/ibknaphtali/" target="_blank" rel="noopener noreferrer">
+                            <img src="{% static 'images/ig.png' %}" width="25" height="25" loading="lazy" alt="_pzedd IG">
+                            @ibknaphatli
+                        </a>
+                        <br/>
+                        <b>Thanks for using LinoCinema.</b>
+                    </p>
+                </div>
+                <div class="col-sm-6 bg-50 text-center text-white border border-white">
+                    <h5>Movie Request</h5>
+                    <form action="{% url 'movie_request' %}" method="POST">
+                        {% csrf_token %}
+                        {% for field in movie_request_form %}
+                            <div class="form-group">
+                                {{ field|add_class:'form-control text-center form-input' }}
+                            </div>
+                            {% for error in field.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        <button type="submit" class="btn btn-md text-black bg-white border-none">
+                            Request Movie
+                        </button>
+                    </form>
+                </div>
+                <div class="col-sm-6 p-1 bg-50 text-center text-white border border-white">
+                    <h5>Tvshow Request</h5>
+                    <form action="{% url 'tvshow_request' %}" method="POST">
+                        {% csrf_token %}
+                        {% for field in tvshow_request_form %}
+                            <div class="form-group">
+                                {{ field|add_class:'form-control text-center form-input' }}
+                            </div>
+                            {% for error in field.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        <button type="submit" class="btn btn-md text-black bg-white border-none">
+                            Request Tvshow
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
