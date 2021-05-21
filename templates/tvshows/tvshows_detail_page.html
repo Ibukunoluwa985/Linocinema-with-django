@@ -66,162 +66,101 @@
 {% block content %}
     <section>
         {% if tvshow_detail %}
-            <div class="container-fluid mb-2 text-white">
+            <div class="container mb-2 text-white">
                 <div class="row">
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div style="position: relative;" class="col-sm-6 mt-2 text-center">
-                                <div class="row justify-content-center">
-                                    <div class="detail_img">
-                                        {% if tvshow_detail.image_link != "None" %}
-                                            <img src="{{ tvshow_detail.image_link }}" class="img" loading="lazy" alt="{{ tvshow_detail.title }} image" width="100%" height="100%">
-                                        {% else %}
-                                            <img src="{{ tvshow_detail.image.url }}" class="img" loading="lazy" alt="{{ tvshow_detail.title }} image" width="100%" height="100%">
-                                        {% endif %}
-                                    </div>
-                                    <i style="position: absolute; top: -16px;" class="fa text-warning fa-2x fa-star"></i>
-                                </div>
-                                <h3 class="text-capitalize">
-                                    <b>{{ tvshow_detail.title }}</b>
-                                </h3>
-                                <div style="font-size: 14px;" class="row justify-content-center">
-                                    <div class="col-10 col-sm-7 text-center">
-                                        <span class="float-left">
-                                            <i class="fa text-warning fa-clock"></i>
-                                            {{ tvshow_detail.year }}
-                                        </span>
-                                        <span>
-                                            <i class="fa text-warning fa-list"></i>
-                                            Tvshow
-                                        </span>
-                                        <span class="imdbRatingPlugin pl-1 text-white h6" data-user="ur117896980" data-title="{{ tvshow_detail.rate }}" data-style="p4">
-                                            <i class="fa text-warning fa-star"></i>
-                                            <a href="https://www.imdb.com/title/{{ tvshow_detail.rate }}/?ref_=plg_rt_1"></a>
-                                        </span>
-                                        <script>
-                                            (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
-                                        </script>
-                                        <span class="float-right">
-                                            <i class="fa text-warning fa-tag"></i>
-                                            {{ tvshow_detail.genre|capfirst }}
-                                        </span>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <p>
-                                            {{ tvshow_detail.description }}
-                                        </p>
-                                        <b>Language:</b>
-                                        {{ tvshow_detail.language|capfirst }}
-                                        <br/>
-                                        <b>Uploaded on:</b>
-                                        {{ tvshow_detail.added_on|naturaltime }}
-                                        <br/>
-                                        <b>Uploaded by:</b>
-                                        {% if tvshow_detail.user == None %}
-                                            @Unknown
-                                        {% else %}
-                                            <button class="btn btn-sm btn-normal" data-toggle="modal" data-target="#userInfoModal">
-                                                <h6>@{{ tvshow_detail.user|capfirst }}</h6>
-                                            </button>
-                                            <div class="modal fade text-black" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content border-none">
-                                                        <div class="modal-header justify-content-center">
-                                                            <h6 class="modal-title text-center" id="userInfoModalLabel">
-                                                                <span class="material-icons align-bottom">account_circle</span>
-                                                                user info
-                                                            </h6>
-                                                        </div>
-                                                        <div style="text-transform: none;" class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <b>Userame:</b>
-                                                                    <br/>
-                                                                    {{ tvshow_detail.user|capfirst|truncatechars:15 }}
-                                                                    <br/>
-                                                                    <b>Email:</b>
-                                                                    <br/>
-                                                                    {{ tvshow_detail.user.email|truncatechars:15 }}
-                                                                    <br/>
-                                                                    <b>Status:</b>
-                                                                    <br/>
-                                                                    {% if request.user.is_active %}
-                                                                        <i class="text-success">active</i>
-                                                                    {% else %}
-                                                                        <i class="text-danger">inactive</i>
-                                                                    {% endif %}
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <b>Uploaded:</b>
-                                                                    <br/>
-                                                                    {{ tvshow_count }}
-                                                                    <br/>
-                                                                    <b>Last Upload:</b>
-                                                                    <br/>
-                                                                    {{ tvshow_last.added_on|naturaltime }}
-                                                                    <br/>
-                                                                    <b>Joined:</b>
-                                                                    <br/>
-                                                                    {{ tvshow_detail.user.date_joined|naturaltime }}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer border-none">
-                                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
+                    <div style="position: relative;" class="col-sm-6 mt-2 text-center">
+                        <div class="row justify-content-center">
+                            <div class="detail_img">
+                                {% if tvshow_detail.image_link != "None" %}
+                                    <img src="{{ tvshow_detail.image_link }}" class="img" loading="lazy" alt="{{ tvshow_detail.title }} image" width="100%" height="100%">
+                                {% else %}
+                                    <img src="{{ tvshow_detail.image.url }}" class="img" loading="lazy" alt="{{ tvshow_detail.title }} image" width="100%" height="100%">
+                                {% endif %}
                             </div>
-
-                            <div class="col-sm-6 mt-2">
-                                <iframe class="detail_trailer" width="100%" height="100%" src="https://www.youtube.com/embed/{{ tvshow_detail.trailer }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                <p class="alert alert-info border-none">
-                                    The season links in the select season pop-up will send you to our storage.
-                                    If help needed on how to download click
-                                    <a href="{% url 'how_to' %}">HERE</a>
-                                </p>
-                            </div>
+                            <i style="position: absolute; top: -16px;" class="fa text-warning fa-2x fa-star"></i>
                         </div>
-
-                        <div class="row justify-content-center border border-white p-2">
-                            <div class="col-sm-6 text-capitalize text-center">
-                                <h6 class="text-white">
-                                    <span>
-                                        Episode size range from 50Mb-150Mb. 100Mb on average.
-                                    </span>
-                                    <br/>
-                                    <button class="btn btn-md btn-light border-none" data-toggle="modal" data-target="#seasonModal">
-                                        <span class="material-icons align-bottom">list</span>
-                                        Seasons
+                        <h3 class="text-capitalize">
+                            <b>{{ tvshow_detail.title }}</b>
+                        </h3>
+                        <div style="font-size: 14px;" class="row justify-content-center">
+                            <div class="col-10 col-sm-7 text-center">
+                                <span class="float-left">
+                                    <i class="fa text-warning fa-clock"></i>
+                                    {{ tvshow_detail.year }}
+                                </span>
+                                <span>
+                                    <i class="fa text-warning fa-list"></i>
+                                    Tvshow
+                                </span>
+                                <span class="imdbRatingPlugin pl-1 text-white h6" data-user="ur117896980" data-title="{{ tvshow_detail.rate }}" data-style="p4">
+                                    <i class="fa text-warning fa-star"></i>
+                                    <a href="https://www.imdb.com/title/{{ tvshow_detail.rate }}/?ref_=plg_rt_1"></a>
+                                </span>
+                                <script>
+                                    (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                </script>
+                                <span class="float-right">
+                                    <i class="fa text-warning fa-tag"></i>
+                                    {{ tvshow_detail.genre|capfirst }}
+                                </span>
+                            </div>
+                            <div class="col-sm-12">
+                                <p>
+                                    {{ tvshow_detail.description }}
+                                </p>
+                                <b>Language:</b>
+                                {{ tvshow_detail.language|capfirst }}
+                                <br/>
+                                <b>Uploaded on:</b>
+                                {{ tvshow_detail.added_on|naturaltime }}
+                                <br/>
+                                <b>Uploaded by:</b>
+                                {% if tvshow_detail.user == None %}
+                                    @Unknown
+                                {% else %}
+                                    <button class="btn btn-sm btn-normal" data-toggle="modal" data-target="#userInfoModal">
+                                        <h6>@{{ tvshow_detail.user|capfirst }}</h6>
                                     </button>
-                                    <div class="modal fade text-black" id="seasonModal" tabindex="-1" role="dialog" aria-labelledby="seasonModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm modal-dialog-scrollable" role="document">
+                                    <div class="modal fade text-black" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content border-none">
                                                 <div class="modal-header justify-content-center">
-                                                    <h5 class="modal-title text-center" id="seasonModalLabel">
-                                                        <span class="material-icons align-bottom">list</span>
-                                                        Select
-                                                    </h5>
+                                                    <h6 class="modal-title text-center" id="userInfoModalLabel">
+                                                        <span class="material-icons align-bottom">account_circle</span>
+                                                        user info
+                                                    </h6>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-sm-12 text-center">
-                                                            <ul class="list-unstyled">
-                                                                {% for season in seasons %}
-                                                                    {% if tvshow_detail.id == season.tvshow.id %}
-                                                                        <li>
-                                                                            <a class="btn btn-sm" target="__blank" href="{{ season.episode_download_link }}">
-                                                                                Season {{ season.season_number }}
-                                                                                Episode {{ season.episode_number }}
-                                                                            </a>
-                                                                        </li>
-                                                                    {% endif %}
-                                                                {% endfor %}
-                                                            </ul>
+                                                <div style="text-transform: none;" class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <b>Userame:</b>
+                                                            <br/>
+                                                            {{ tvshow_detail.user|capfirst|truncatechars:15 }}
+                                                            <br/>
+                                                            <b>Email:</b>
+                                                            <br/>
+                                                            {{ tvshow_detail.user.email|truncatechars:15 }}
+                                                            <br/>
+                                                            <b>Status:</b>
+                                                            <br/>
+                                                            {% if request.user.is_active %}
+                                                                <i class="text-success">active</i>
+                                                            {% else %}
+                                                                <i class="text-danger">inactive</i>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <b>Uploaded:</b>
+                                                            <br/>
+                                                            {{ tvshow_count }}
+                                                            <br/>
+                                                            <b>Last Upload:</b>
+                                                            <br/>
+                                                            {{ tvshow_last.added_on|naturaltime }}
+                                                            <br/>
+                                                            <b>Joined:</b>
+                                                            <br/>
+                                                            {{ tvshow_detail.user.date_joined|naturaltime }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,49 +170,86 @@
                                             </div>
                                         </div>
                                     </div>
-                                </h6>
-                            </div>
-                            <div class="col-sm-6 text-center">
-                                <h4 class="text-white">Share Page Link</h4>
-                                <script>
-                                    var a2a_config = a2a_config || {};
-                                    a2a_config.icon_color = "#ffffff,#000000";
-                                </script>
-                                <style type="text/css">
-                                    #my_centered_buttons { display: flex; justify-content: center; }
-                                </style>
-                                <!-- AddToAny BEGIN -->
-                                <div class="a2a_kit a2a_kit_size_32 a2a_default_style"  id="my_centered_buttons">
-                                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-                                    <a class="a2a_button_copy_link"></a>
-                                    <a class="a2a_button_whatsapp"></a>
-                                    <a class="a2a_button_facebook"></a>
-                                    <a class="a2a_button_twitter"></a>
-                                </div>
-                                <script async src="https://static.addtoany.com/menu/page.js"></script>
-                                <!-- AddToAny END -->
+                                {% endif %}
                             </div>
                         </div>
                     </div>
 
-                    <!-- ads -->
-                    <div class="col-sm-2 text-center text-white">
-                        <span>advertisement</span>
-                        <a href="https://kol.jumia.com/api/click/banner/83217693-ead7-43da-aab2-742b03858dc1/07aa0e6a-613a-4913-ba09-e551412d47da/?utm_campaign=83217693-ead7-43da-aab2-742b03858dc1">
-                            <img style="width: 100% !important;" class="d-none d-md-block" src="https://filedn.com/lyaQed6jT9EFxgMccSbkU1H/Images/jumia-img-1.jpg" alt="ads" />
-                            <img style="width: 100% !important; height:300px !important;" class="d-block d-md-none" src="https://filedn.com/lyaQed6jT9EFxgMccSbkU1H/Images/jumia-img-2.jpg" alt="ads" />
-                        </a>
+                    <div class="col-sm-6 mt-2">
+                        <iframe class="detail_trailer" width="100%" height="100%" src="https://www.youtube.com/embed/{{ tvshow_detail.trailer }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <p class="alert alert-info border-none">
+                            The season links in the select season pop-up will send you to our storage.
+                            If help needed on how to download click
+                            <a href="{% url 'how_to' %}">HERE</a>
+                        </p>
                     </div>
-
                 </div>
-            </div>
 
-            <!-- ads -->
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-sm-12 text-center text-white">
-                        <span>advertisement</span>
-                        <iframe scrolling='no' frameBorder='0' style='padding:0px; margin:0px; border:0px;border-style:none;border-style:none;' width='100%' height='90' src="https://refbanners.com/I?tag=d_905763m_38075c_&site=905763&ad=38075" ></iframe>
+                <div class="row justify-content-center border border-white p-2">
+                    <div class="col-sm-6 text-capitalize text-center">
+                        <h6 class="text-white">
+                            <span>
+                                Episode size range from 50Mb-150Mb. 100Mb on average.
+                            </span>
+                            <br/>
+                            <button class="btn btn-md btn-light border-none" data-toggle="modal" data-target="#seasonModal">
+                                <span class="material-icons align-bottom">list</span>
+                                Seasons
+                            </button>
+                            <div class="modal fade text-black" id="seasonModal" tabindex="-1" role="dialog" aria-labelledby="seasonModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-scrollable" role="document">
+                                    <div class="modal-content border-none">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title text-center" id="seasonModalLabel">
+                                                <span class="material-icons align-bottom">list</span>
+                                                Select
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-12 text-center">
+                                                    <ul class="list-unstyled">
+                                                        {% for season in seasons %}
+                                                            {% if tvshow_detail.id == season.tvshow.id %}
+                                                                <li>
+                                                                    <a class="btn btn-sm" target="__blank" href="{{ season.episode_download_link }}">
+                                                                        Season {{ season.season_number }}
+                                                                        Episode {{ season.episode_number }}
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-none">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h6>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <h4 class="text-white">Share Page Link</h4>
+                        <script>
+                            var a2a_config = a2a_config || {};
+                            a2a_config.icon_color = "#ffffff,#000000";
+                        </script>
+                        <style type="text/css">
+                            #my_centered_buttons { display: flex; justify-content: center; }
+                        </style>
+                        <!-- AddToAny BEGIN -->
+                        <div class="a2a_kit a2a_kit_size_32 a2a_default_style"  id="my_centered_buttons">
+                            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                            <a class="a2a_button_copy_link"></a>
+                            <a class="a2a_button_whatsapp"></a>
+                            <a class="a2a_button_facebook"></a>
+                            <a class="a2a_button_twitter"></a>
+                        </div>
+                        <script async src="https://static.addtoany.com/menu/page.js"></script>
+                        <!-- AddToAny END -->
                     </div>
                 </div>
             </div>
