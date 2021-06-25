@@ -144,7 +144,7 @@
                         <div class="col-sm-12 mt-2">
                             <h5 class="text-warning">Movies</h5>
                         </div>
-                        {% for movie in movies %}
+                        {% for movie in random_movies %}
                             {% if movie.permission == 1 %}
                                 <div class="col-6 col-md-2 text-capitalize">
                                     <div class="card card-small-h border border-white">
@@ -258,7 +258,7 @@
                         <div class="col-sm-12 mt-2">
                             <h5 class="text-warning">Tvshows</h5>
                         </div>
-                        {% for tvshow in tvshows %}
+                        {% for tvshow in random_tvshows %}
                             <div class="col-6 col-md-2 text-capitalize">
                                 <div class="card card-small-h border border-white">
                                     <a href="{% url 'tvshows_detail_page' pk=tvshow.id %}" class="img-custom-fluid">

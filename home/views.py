@@ -16,18 +16,14 @@ class LandingPage(View):
     template_name = template_name = "home/landing_page.html"
     def get(self, request, *args, **kwargs):
         context = {}
-        # change values
         movies_random_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 6)
         tvshows_random_id = random.sample(list(Tvshows.objects.values_list("id", flat=True)), 6)
-        # change values
-        movies_slide_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 2)
-        tvshows_slide_id = random.sample(list(Tvshows.objects.values_list("id", flat=True)), 2)
         context['movies'] = Movies.objects.order_by('-id')[:6]
         context['tvshows'] = Tvshows.objects.order_by('-id')[:6]
         context['random_movies'] = Movies.objects.filter(id__in=movies_random_id)
         context['random_tvshows'] = Tvshows.objects.filter(id__in=tvshows_random_id)
-        context['slide_movies'] = Movies.objects.filter(id__in=movies_slide_id)
-        context['slide_tvshows'] = Tvshows.objects.filter(id__in=tvshows_slide_id)
+        context['slide_movies'] = Movies.objects.order_by('-id')[:2]
+        context['slide_tvshows'] = Tvshows.objects.order_by('-id')[:2]
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
