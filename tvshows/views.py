@@ -1,9 +1,10 @@
+from .serializers import SubtitleSerializer, TvshowsSerializer, SeasonSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .serializers import TvshowsSerializer, SeasonSerializer
 from django.views.generic import (ListView, DetailView)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Tvshows, Season
+from .models import Subtitle, Tvshows, Season
+import random
 
 class TvshowsPage(ListView):
     model = Tvshows
@@ -38,8 +39,10 @@ class TvshowsDetailPage(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tvshow_user = Tvshows.objects.get(id=self.kwargs['pk'])
-        context['related_tvshows'] = Tvshows.objects.order_by('?')
+        random_id = random.sample(list(Tvshows.objects.values_list("id", flat=True)), 1)
+        context['related_tvshows'] = Tvshows.objects.filter(id__in=random_id)
         context["seasons"] = Season.objects.order_by('episode_number')
+        context["subtitles"] = Subtitle.objects.order_by('episode_number')
         context['tvshow_count'] = Tvshows.objects.filter(user=tvshow_user.user).count()
         context["tvshow_last"] = Tvshows.objects.filter(user=tvshow_user.user).last()
         return context
@@ -58,8 +61,18 @@ def tvshow_list_api(request, format=None):
 @api_view(['GET'])
 def season_list_api(request, format=None):
     """
-    to view tvshow list api
+    to view tvshow season list api
     """
     season = Season.objects.order_by('-id')
     serializer = SeasonSerializer(season, many=True)
+    return Response(serializer.data)
+
+# API VIEW
+@api_view(['GET'])
+def subtitle_list_api(request, format=None):
+    """
+    to view tvshow subtitle list api
+    """
+    subtitle = Subtitle.objects.order_by('-id')
+    serializer = SubtitleSerializer(subtitle, many=True)
     return Response(serializer.data)

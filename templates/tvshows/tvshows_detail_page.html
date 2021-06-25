@@ -196,6 +196,10 @@
                                 <span class="material-icons align-bottom">list</span>
                                 Seasons
                             </button>
+                            <button class="btn btn-md btn-light border-none" data-toggle="modal" data-target="#subtileModal">
+                                <span class="material-icons align-bottom">subtitles</span>
+                                Subtitle
+                            </button>
                             <div class="modal fade text-black" id="seasonModal" tabindex="-1" role="dialog" aria-labelledby="seasonModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-sm modal-dialog-scrollable" role="document">
                                     <div class="modal-content border-none">
@@ -215,6 +219,39 @@
                                                                     <a class="btn btn-sm" target="__blank" href="{{ season.episode_download_link }}">
                                                                         Season {{ season.season_number }}
                                                                         Episode {{ season.episode_number }}
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-none">
+                                            <button class="btn btn-sm bg-black text-white home-card-btn" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade text-black" id="subtileModal" tabindex="-1" role="dialog" aria-labelledby="subtileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-scrollable" role="document">
+                                    <div class="modal-content border-none">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title text-center" id="subtileModalLabel">
+                                                <span class="material-icons align-bottom">subtitles</span>
+                                                Subtitle
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-12 text-center">
+                                                    <ul class="list-unstyled">
+                                                        {% for subtitle in subtitles %}
+                                                            {% if tvshow_detail.id == subtitle.tvshow.id %}
+                                                                <li>
+                                                                    <a class="btn btn-sm" target="__blank" href="{{ subtitle.subtitle_download_link }}">
+                                                                        subtitle {{ subtitle.season_number }}
+                                                                        Episode {{ subtitle.episode_number }}
                                                                     </a>
                                                                 </li>
                                                             {% endif %}

@@ -51,11 +51,157 @@
     <section>
         <div class="w-100">
             <div class="row no-gutters">
-                <!-- now playing movies -->
-                <div class="col-sm-12 mt-2">
-                    <a href="" class="text-warning">
-                        <span class="font-weight-bold">Movies playing now</span>
-                    </a>
+                <!-- carousel slider -->
+                <div class="col-12 d-block d-md-none bg-black">
+                    <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for slide_tvshow in slide_tvshows %}
+                                <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                                    <div class="slider">
+                                        <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}" class="slider-img">
+                                            <img src="{{ slide_tvshow.slider_image_link }}" class="d-block w-100" loading="lazy" alt="{{ slide_tvshow.title }} image" width="100%" height="100%">
+                                            <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                                        </a>
+                                        <div class="card-body">
+                                            <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}">{{ slide_tvshow.title|truncatechars:20 }}</a>
+                                            <div class="card-tag">
+                                                <span>Tvshow, {{ slide_tvshow.genre|capfirst }}</span>
+                                            </div>
+                                            <div>
+                                                <form action="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-light">
+                                                        <span class="material-icons align-bottom">download</span>
+                                                        DOWNLOAD
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="card-rating">
+                                                <span class="imdb">
+                                                    <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ slide_tvshow.rate }}" data-style="p4">
+                                                        <a href="https://www.imdb.com/title/{{ slide_tvshow.rate }}/?ref_=plg_rt_1"></a>
+                                                    </span>
+                                                    <script>
+                                                        (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                    </script>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for slide_movie in slide_movies %}
+                                <div class="carousel-item">
+                                    {% if slide_movie.permission == 1 %}
+                                        <div class="slider">
+                                            <a href="{% url 'movies_detail_page' pk=slide_movie.id %}" class="slider-img">
+                                                <img src="{{ slide_movie.slider_image_link }}" class="d-block w-100" loading="lazy" alt="{{ slide_movie.title }} image" width="100%" height="100%">
+                                            </a>
+                                            <div class="card-body">
+                                                <a href="{% url 'movies_detail_page' pk=slide_movie.id %}">{{ slide_movie.title|truncatechars:20 }}</a>
+                                                <div class="card-tag">
+                                                    <span>Movies, {{ slide_movie.genre|capfirst }}</span>
+                                                </div>
+                                                <div>
+                                                    <form action="{% url 'movies_detail_page' pk=slide_movie.id %}">
+                                                        <button type="submit" class="btn btn-sm btn-outline-light">
+                                                            <span class="material-icons align-bottom">download</span>
+                                                            DOWNLOAD
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="card-rating">
+                                                    <span class="imdb">
+                                                        <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ slide_movie.rate }}" data-style="p4">
+                                                            <a href="https://www.imdb.com/title/{{ slide_movie.rate }}/?ref_=plg_rt_1"></a>
+                                                        </span>
+                                                        <script>
+                                                            (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                        </script>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="d-block d-md-none" style="height: 3rem !important; width: 100%; background-color: #000000;"></div>
+
+                <!-- Movies -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12 mt-2">
+                            <h5 class="text-warning">Movies</h5>
+                        </div>
+                        {% for movie in movies %}
+                            {% if movie.permission == 1 %}
+                                <div class="col-6 col-md-2 text-capitalize">
+                                    <div class="card card-small-h border border-white">
+                                        <a href="{% url 'movies_detail_page' pk=movie.id %}" class="img-custom-fluid">
+                                            {% if movie.image_link != "None" %}
+                                                <img src="{{ movie.image_link }}" loading="lazy" alt="{{ movie.title }} image" width="100%" height="100%">
+                                            {% else %}
+                                                <img src="{{ movie.image.url }}" loading="lazy" alt="{{ movie.title }} image" width="100%" height="100%">
+                                            {% endif %}
+                                            <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                                        </a>
+                                        <div class="card-head">
+                                            <span class="card-480p">
+                                                480p
+                                            </span>
+                                            <span class="card-mb">
+                                                {{ movie.mb }}mb
+                                            </span>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="{% url 'movies_detail_page' pk=movie.id %}">{{ movie.title|truncatechars:20 }}</a>
+                                            <div class="card-tag">
+                                                <span>movies, {{ movie.genre }}</span>
+                                            </div>
+                                            <div class="card-year">
+                                                <span class="material-icons align-bottom md-18 text-warning">query_builder</span>
+                                                <span class="text-white">{{ movie.year }}</span>
+                                            </div>
+                                            <div class="card-rating">
+                                                <span class="imdb">
+                                                    <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ movie.rate }}" data-style="p4">
+                                                        <a href="https://www.imdb.com/title/{{ movie.rate }}/?ref_=plg_rt_1"></a>
+                                                    </span>
+                                                    <script>
+                                                        (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                    </script>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-sm-12 mt-2 text-center">
+                    <form action="{% url 'movies_page' %}">
+                        <button type="submit" class="btn btn-md btn-outline-light">
+                            More Movies
+                        </button>
+                    </form>
+                </div>
+
+                <!-- New movies -->
+                <div class="col-sm-12 mt-2 pb-2 bg-white">
+                    <h5 class="text-warning">New Movies</h5>
                     <div class="swiper-container swiper-container-movies">
                         <div class="swiper-wrapper">
                             {% for movie in movies %}
@@ -106,11 +252,68 @@
                     </div>
                 </div>
 
-                <!-- now playing tvshow -->
-                <div class="col-sm-12 mt-2">
-                    <a href="" class="text-warning">
-                        <span class="font-weight-bold">Tvshows playing now</span>
-                    </a>
+                <!-- Tvshow -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12 mt-2">
+                            <h5 class="text-warning">Tvshows</h5>
+                        </div>
+                        {% for tvshow in tvshows %}
+                            <div class="col-6 col-md-2 text-capitalize">
+                                <div class="card card-small-h border border-white">
+                                    <a href="{% url 'tvshows_detail_page' pk=tvshow.id %}" class="img-custom-fluid">
+                                        {% if tvshow.image_link != "None" %}
+                                            <img src="{{ tvshow.image_link }}" loading="lazy" alt="{{ tvshow.title }} image" width="100%" height="100%">
+                                        {% else %}
+                                            <img src="{{ tvshow.image.url }}" loading="lazy" alt="{{ tvshow.title }} image" width="100%" height="100%">
+                                        {% endif %}
+                                        <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                                    </a>
+                                    <div class="card-head">
+                                        <span class="card-480p">
+                                            480p
+                                        </span>
+                                        <span class="card-mb">
+                                            <span class="material-icons align-bottom">tv</span>tv
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="{% url 'tvshows_detail_page' pk=tvshow.id %}">{{ tvshow.title|truncatechars:20 }}</a>
+                                        <div class="card-tag">
+                                            <span>tvshow, {{ tvshow.genre }}</span>
+                                        </div>
+                                        <div class="card-year">
+                                            <span class="material-icons align-bottom md-18 text-warning">query_builder</span>
+                                            <span class="text-white">{{ tvshow.year }}</span>
+                                        </div>
+                                        <div class="card-rating">
+                                            <span class="imdb">
+                                                <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ tvshow.rate }}" data-style="p4">
+                                                    <a href="https://www.imdb.com/title/{{ tvshow.rate }}/?ref_=plg_rt_1"></a>
+                                                </span>
+                                                <script>
+                                                    (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                </script>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-sm-12 mt-2 text-center">
+                    <form action="{% url 'tvshows_page' %}">
+                        <button type="submit" class="btn btn-md btn-outline-light">
+                            More Tvshows
+                        </button>
+                    </form>
+                </div>
+
+                <!-- New tvshow -->
+                <div class="col-sm-12 mt-2 pb-2 bg-white">
+                    <h5 class="text-warning">New Tvshows</h5>
                     <div class="swiper-container swiper-container-tvshows">
                         <div class="swiper-wrapper">
                             {% for tvshow in tvshows %}

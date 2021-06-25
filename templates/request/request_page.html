@@ -81,7 +81,7 @@
                         <b>Thanks for using LinoCinema.</b>
                     </p>
                 </div>
-                <div class="col-sm-6 bg-50 text-center text-white border border-white">
+                <div class="col-sm-6 p-1 bg-50 text-center text-white border-left border-top border-white">
                     <h5>Movie Request</h5>
                     <form action="{% url 'movie_request' %}" method="POST">
                         {% csrf_token %}
@@ -98,7 +98,7 @@
                         </button>
                     </form>
                 </div>
-                <div class="col-sm-6 p-1 bg-50 text-center text-white border border-white">
+                <div class="col-sm-6 p-1 bg-50 text-center text-white border-right border-top border-white">
                     <h5>Tvshow Request</h5>
                     <form action="{% url 'tvshow_request' %}" method="POST">
                         {% csrf_token %}

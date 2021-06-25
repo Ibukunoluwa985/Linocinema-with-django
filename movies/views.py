@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import MovieSerializer
 from .models import Movies
+import random
 
 class MoviesPage(ListView):
     model = Movies
@@ -38,7 +39,8 @@ class MoviesDetailPage(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         movie_user = Movies.objects.get(id=self.kwargs['pk'])
-        context['related_movies'] = Movies.objects.order_by('?')
+        random_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 10)
+        context['related_movies'] = Movies.objects.filter(id__in=random_id)
         context['movie_count'] = Movies.objects.filter(user=movie_user.user, permission=1).count()
         context["movie_last"] = Movies.objects.filter(user=movie_user.user, permission=1).last()
         return context

@@ -16,3 +16,10 @@ class SeasonAdmin(admin.ModelAdmin):
     list_display = ("tvshow", "season_number", "episode_number", "added_on")
     # Season search
     search_fields = ("id__startswith", "tvshow__startswith", "added_on__startswith", )
+
+@admin.register(Subtitle)
+class SubtitleAdmin(admin.ModelAdmin):
+    # Subtitle display
+    list_display = ("tvshow", "season_number", "episode_number", "added_on")
+    # Subtitle search
+    search_fields = ("id__startswith", "tvshow__startswith", "added_on__startswith", )
