@@ -13,7 +13,7 @@ from itertools import chain
 import datetime, random
 
 class LandingPage(View):
-    template_name = template_name = "home/landing_page.html"
+    template_name = "home/landing_page.html"
     def get(self, request, *args, **kwargs):
         context = {}
         movies_random_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 6)

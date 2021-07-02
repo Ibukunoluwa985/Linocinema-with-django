@@ -1,5 +1,21 @@
-from django.db import models
 from django.contrib.auth.models import User
+import urllib.parse as urlparse
+from django.db import models
+from PIL import Image
+
+def youtude_id(value):
+    query = urlparse.urlparse(value)
+    if query.hostname == 'youtu.be':
+        return query.path[1:]
+    if query.hostname in ('www.youtube.com', 'youtube.com'):
+        if query.path == '/watch':
+            p = urlparse.parse_qs(query.query)
+            return p['v'][0]
+        if query.path[:7] == '/embed/':
+            return query.path.split('/')[2]
+        if query.path[:3] == '/v/':
+            return query.path.split('/')[2]
+    return None
 
 GENRE_CHOICES = (
    ('Action', 'Action'),
@@ -36,3 +52,11 @@ class Movies(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        self.trailer = youtude_id(self.trailer)
+        super(Movies, self).save(*args, **kwargs)
+        image = Image.open(self.image)
+        if image.height > 500 or image.width > 500:
+            image.thumbnail((500, 500))
+            image.save(self.image.path)
