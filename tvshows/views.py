@@ -1,5 +1,6 @@
 from .serializers import SubtitleSerializer, TvshowsSerializer, SeasonSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from home.consume_api import get_linocinemablog_random_post
 from django.views.generic import (ListView, DetailView)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,6 +31,7 @@ class TvshowsPage(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context["tvshows"] = tvshows
         context["page_range"] = page_range
+        context['blog_posts'] = get_linocinemablog_random_post()
         return context
 
 class TvshowsDetailPage(DetailView):
@@ -39,6 +41,7 @@ class TvshowsDetailPage(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tvshow_user = Tvshows.objects.get(id=self.kwargs['pk'])
+        context['blog_posts'] = get_linocinemablog_random_post()
         random_id = random.sample(list(Tvshows.objects.values_list("id", flat=True)), 1)
         context['related_tvshows'] = Tvshows.objects.filter(id__in=random_id)
         context["seasons"] = Season.objects.order_by('episode_number')

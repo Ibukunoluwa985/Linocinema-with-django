@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from home.consume_api import get_linocinemablog_random_post
 from django.views.generic import (ListView, DetailView)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,6 +31,7 @@ class MoviesPage(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context["movies"] = movies
         context["page_range"] = page_range
+        context['blog_posts'] = get_linocinemablog_random_post()
         return context
 
 class MoviesDetailPage(DetailView):
@@ -39,7 +41,8 @@ class MoviesDetailPage(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         movie_user = Movies.objects.get(id=self.kwargs['pk'])
-        random_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 10)
+        context['blog_posts'] = get_linocinemablog_random_post()
+        random_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 1)
         context['related_movies'] = Movies.objects.filter(id__in=random_id)
         context['movie_count'] = Movies.objects.filter(user=movie_user.user, permission=1).count()
         context["movie_last"] = Movies.objects.filter(user=movie_user.user, permission=1).last()

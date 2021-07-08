@@ -185,6 +185,26 @@
                     </div>
                 </div>
 
+                {% for blog_post in blog_posts %}
+                    <div class="post-container">
+                        <div class="col-6 post-img-container">
+                            <img class="post-img" src="https://blog.linocinema.com{{blog_post.image}}" alt="blog image">
+                        </div>
+                        <div class="col-6 post-body-container">
+                            <a href="https://blog.linocinema.com/blog/post_id={{blog_post.id}}/" target="_blank" rel="noopener noreferrer">
+                                <h1 class="post-title">{{blog_post.title|capfirst|truncatechars:50}}</h1>
+                                <p class="post-author">By {{blog_post.author.user.username|capfirst}}</p>
+                                <div class="d-none d-md-block post-body">
+                                    {{blog_post.body|safe|urlize|truncatechars:600}}
+                                </div>
+                                <div class="d-block d-md-none post-body">
+                                    {{blog_post.body|safe|urlize|truncatechars:200}}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
                 <div class="row justify-content-center border border-white p-2">
                     <div class="col-sm-6 text-capitalize text-center">
                         <h6 class="text-white">

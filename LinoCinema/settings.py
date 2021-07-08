@@ -14,7 +14,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['192.168.43.143']
 
 # Application definition
 
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'emails.apps.EmailsConfig',
 
     'widget_tweaks',
-    'django_filters',
     'rest_framework',
 ]
 

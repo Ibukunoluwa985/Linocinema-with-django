@@ -53,44 +53,10 @@
             <div class="row no-gutters">
                 <!-- carousel slider -->
                 <div class="col-12 d-block d-md-none bg-black">
-                    <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                    <div id="carouselControls" class="carousel slide carousel-fade" data-ride="carousel">
                         <div class="carousel-inner">
-                            {% for slide_tvshow in slide_tvshows %}
-                                <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
-                                    <div class="slider">
-                                        <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}" class="slider-img">
-                                            <img src="{{ slide_tvshow.slider_image_link }}" class="d-block w-100" loading="lazy" alt="{{ slide_tvshow.title }} image" width="100%" height="100%">
-                                            <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
-                                        </a>
-                                        <div class="card-body">
-                                            <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}">{{ slide_tvshow.title|truncatechars:20 }}</a>
-                                            <div class="card-tag">
-                                                <span>Tvshow, {{ slide_tvshow.genre|capfirst }}</span>
-                                            </div>
-                                            <div>
-                                                <form action="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}">
-                                                    <button type="submit" class="btn btn-sm btn-outline-light">
-                                                        <span class="material-icons align-bottom">download</span>
-                                                        DOWNLOAD
-                                                    </button>
-                                                </form>
-                                            </div>
-                                            <div class="card-rating">
-                                                <span class="imdb">
-                                                    <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ slide_tvshow.rate }}" data-style="p4">
-                                                        <a href="https://www.imdb.com/title/{{ slide_tvshow.rate }}/?ref_=plg_rt_1"></a>
-                                                    </span>
-                                                    <script>
-                                                        (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
-                                                    </script>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
                             {% for slide_movie in slide_movies %}
-                                <div class="carousel-item">
+                                <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
                                     {% if slide_movie.permission == 1 %}
                                         <div class="slider">
                                             <a href="{% url 'movies_detail_page' pk=slide_movie.id %}" class="slider-img">
@@ -122,6 +88,40 @@
                                             </div>
                                         </div>
                                     {% endif %}
+                                </div>
+                            {% endfor %}
+                            {% for slide_tvshow in slide_tvshows %}
+                                <div class="carousel-item">
+                                    <div class="slider">
+                                        <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}" class="slider-img">
+                                            <img src="{{ slide_tvshow.slider_image_link }}" class="d-block w-100" loading="lazy" alt="{{ slide_tvshow.title }} image" width="100%" height="100%">
+                                            <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
+                                        </a>
+                                        <div class="card-body">
+                                            <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}">{{ slide_tvshow.title|truncatechars:20 }}</a>
+                                            <div class="card-tag">
+                                                <span>Tvshow, {{ slide_tvshow.genre|capfirst }}</span>
+                                            </div>
+                                            <div>
+                                                <form action="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-light">
+                                                        <span class="material-icons align-bottom">download</span>
+                                                        DOWNLOAD
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="card-rating">
+                                                <span class="imdb">
+                                                    <span class="imdbRatingPlugin pl-1 h6" data-user="ur117896980" data-title="{{ slide_tvshow.rate }}" data-style="p4">
+                                                        <a href="https://www.imdb.com/title/{{ slide_tvshow.rate }}/?ref_=plg_rt_1"></a>
+                                                    </span>
+                                                    <script>
+                                                        (function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");
+                                                    </script>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>

@@ -52,9 +52,8 @@ class Tvshows(models.Model):
         self.trailer = youtude_id(self.trailer)
         super(Tvshows, self).save(*args, **kwargs)
         image = Image.open(self.image)
-        if image.height > 500 or image.width > 500:
-            image.thumbnail((500, 500))
-            image.save(self.image.path)
+        image.thumbnail((500, 500))
+        image.save(self.image.path)
 
 # season model
 class Season(models.Model):

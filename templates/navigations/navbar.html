@@ -11,7 +11,7 @@
 	{% if request.get_full_path == '/' or request.get_full_path == '/movies/' or request.get_full_path == '/tvshows/' or request.get_full_path == '/explore/' or 'search' in request.get_full_path %}
 		<div class="searchbar-out mt-2">
 			<form action="{% url 'search_page' %}" class="searchbar">
-				<input id="id_search" class="search_input" type="text" name="search" value="{{ request.GET.search }}" required="required" class="nav-transparent col-10 shadow-none text-center border-0" placeholder="Search, movies, tvshows, users, staffs..." aria-label="Search">
+				<input id="id_search" type="text" name="search" value="{{ request.GET.search }}" required="required" class="nav-transparent col-10 shadow-none text-center border-0 search_input" placeholder="Search, movies, tvshows, users, staffs..." aria-label="Search">
 				<button class="btn search_icon" type="submit">
 					<span class="material-icons align-bottom">search</span>
 				</button>
