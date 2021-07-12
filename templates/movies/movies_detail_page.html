@@ -192,7 +192,7 @@
                     {% for blog_post in blog_posts %}
                         <div class="post-container">
                             <div class="col-6 post-img-container">
-                                <img class="post-img" src="https://www.linocinemablog.com{{blog_post.image}}" alt="blog image">
+                                <img class="post-img" src="{{blog_post.image}}" alt="blog image">
                             </div>
                             <div class="col-6 post-body-container">
                                 <a href="https://www.linocinemablog.com/blog/post_id={{blog_post.id}}/" target="_blank" rel="noopener noreferrer">

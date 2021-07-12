@@ -1,3 +1,4 @@
+from home.consume_api import get_linocinemablog_random_post
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ExploreSerializer
@@ -16,6 +17,7 @@ class ExplorePage(ListView):
         tvshows_random_id = random.sample(list(Tvshows.objects.values_list("id", flat=True)), 24)
         context["movies"] = Movies.objects.filter(id__in=movies_random_id)
         context["tvshows"] = Tvshows.objects.filter(id__in=tvshows_random_id)
+        context['blog_posts'] = get_linocinemablog_random_post()
         return context
 
 # API VIEW
