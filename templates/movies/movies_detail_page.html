@@ -192,10 +192,10 @@
                     {% for blog_post in blog_posts %}
                         <div class="post-container">
                             <div class="col-6 post-img-container">
-                                <img class="post-img" src="https://blog.linocinema.com{{blog_post.image}}" alt="blog image">
+                                <img class="post-img" src="https://www.linocinemablog.com{{blog_post.image}}" alt="blog image">
                             </div>
                             <div class="col-6 post-body-container">
-                                <a href="https://blog.linocinema.com/blog/post_id={{blog_post.id}}/" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linocinemablog.com/blog/post_id={{blog_post.id}}/" target="_blank" rel="noopener noreferrer">
                                     <h1 class="post-title">{{blog_post.title|capfirst|truncatechars:50}}</h1>
                                     <p class="post-author">By {{blog_post.author.user.username|capfirst}}</p>
                                     <div class="d-none d-md-block post-body">

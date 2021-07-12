@@ -3,7 +3,7 @@ import requests
 
 def get_linocinemablog_random_post():
     try:
-        url = "https://blog.linocinema.com/blog/api/random_blog_list/"
+        url = "https://www.linocinemablog.com/blog/api/random_blog_list/"
         r = requests.get(url)
         if r.status_code == 200:
             posts = r.json()
