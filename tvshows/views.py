@@ -57,7 +57,8 @@ def tvshow_list_api(request, format=None):
     to view tvshow list api
     """
     tvshow = Tvshows.objects.order_by('-id')
-    serializer = TvshowsSerializer(tvshow, many=True, context={"request":request})
+    # serializer = TvshowsSerializer(tvshow, many=True, context={"request":request})
+    serializer = TvshowsSerializer(tvshow, many=True)
     return Response(serializer.data)
 
 # API VIEW

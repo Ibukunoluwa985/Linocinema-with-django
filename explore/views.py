@@ -26,6 +26,7 @@ def explore_list_api(request, format=None):
     """
     to view movie list api
     """
-    shuffle_movies = random.sample(list(Movies.objects.values_list("id", flat=True)), 24)
+    # shuffle_movies = random.sample(list(Movies.objects.values_list("id", flat=True)), 24)
+    shuffle_movies = Movies.objects.order_by("?")[:24]
     serializer = ExploreSerializer(shuffle_movies, many=True)
     return Response(serializer.data)

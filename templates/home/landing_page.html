@@ -60,7 +60,7 @@
                                     {% if slide_movie.permission == 1 %}
                                         <div class="slider">
                                             <a href="{% url 'movies_detail_page' pk=slide_movie.id %}" class="slider-img">
-                                                <img src="{{ slide_movie.slider_image_link }}" class="d-block w-100" loading="lazy" alt="{{ slide_movie.title }} image" width="100%" height="100%">
+                                                <img src="{{ slide_movie.slider_image.url }}" class="d-block w-100" loading="lazy" alt="{{ slide_movie.title }} image" width="100%" height="100%">
                                             </a>
                                             <div class="card-body">
                                                 <a href="{% url 'movies_detail_page' pk=slide_movie.id %}">{{ slide_movie.title|truncatechars:20 }}</a>
@@ -94,7 +94,7 @@
                                 <div class="carousel-item">
                                     <div class="slider">
                                         <a href="{% url 'tvshows_detail_page' pk=slide_tvshow.id %}" class="slider-img">
-                                            <img src="{{ slide_tvshow.slider_image_link }}" class="d-block w-100" loading="lazy" alt="{{ slide_tvshow.title }} image" width="100%" height="100%">
+                                            <img src="{{ slide_tvshow.slider_image.url }}" class="d-block w-100" loading="lazy" alt="{{ slide_tvshow.title }} image" width="100%" height="100%">
                                             <span class="material-icons align-bottom md-50 text-white play-btn">play_circle</span>
                                         </a>
                                         <div class="card-body">

@@ -33,9 +33,9 @@ GENRE_CHOICES = (
 class Movies(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True,)
     permission = models.IntegerField(default=1)
-    image = models.ImageField(upload_to='movie_img', default='../static/images/no-image.png')
+    image = models.ImageField(upload_to='movie_img', default='no-image.png')
     image_link = models.CharField(max_length=1000, default="None", blank=False, null=False)
-    slider_image_link = models.CharField(max_length=1000, blank=False, null=False)
+    slider_image = models.ImageField(upload_to='slider_img/movies', default='no-image.png')
     title = models.CharField(max_length=250, null=True)
     language = models.CharField(max_length=250, default='English')
     rate = models.CharField(max_length=250, null=True)
@@ -59,3 +59,6 @@ class Movies(models.Model):
         image = Image.open(self.image)
         image.thumbnail((500, 500))
         image.save(self.image.path)
+        slider_image = Image.open(self.slider_image)
+        slider_image.thumbnail((500, 300))
+        slider_image.save(self.slider_image.path)

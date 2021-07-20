@@ -55,6 +55,7 @@ def movie_list_api(request, format=None):
     to view movie list api
     """
     movie = Movies.objects.order_by('-id')
-    serializer = MovieSerializer(movie, many=True, context={"request":request})
+    # serializer = MovieSerializer(movie, many=True, context={"request":request})
+    serializer = MovieSerializer(movie, many=True)
     return Response(serializer.data)
     

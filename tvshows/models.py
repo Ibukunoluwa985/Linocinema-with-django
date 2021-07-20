@@ -33,9 +33,9 @@ GENRE_CHOICES = (
 # tvshow model
 class Tvshows(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True,)
-    image = models.ImageField(upload_to='tvshow_img', default='../static/images/no-image.png')
+    image = models.ImageField(upload_to='tvshow_img', default='no-image.png')
     image_link = models.CharField(max_length=1000, default="None", blank=False, null=False)
-    slider_image_link = models.CharField(max_length=1000, blank=False, null=False)
+    slider_image = models.ImageField(upload_to='slider_img/tvshows', default='no-image.png')
     title = models.CharField(max_length=250, null=True)
     language = models.CharField(max_length=250, default='English')
     rate = models.CharField(max_length=250, null=True)
@@ -54,6 +54,9 @@ class Tvshows(models.Model):
         image = Image.open(self.image)
         image.thumbnail((500, 500))
         image.save(self.image.path)
+        slider_image = Image.open(self.slider_image)
+        slider_image.thumbnail((500, 300))
+        slider_image.save(self.slider_image.path)
 
 # season model
 class Season(models.Model):
