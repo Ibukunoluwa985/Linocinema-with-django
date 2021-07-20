@@ -10,18 +10,25 @@ from movies.models import Movies
 from collections import Counter
 from django.db.models import Q
 from itertools import chain
-import datetime, random
+import datetime
 
 class LandingPage(View):
     template_name = "home/landing_page.html"
     def get(self, request, *args, **kwargs):
         context = {}
-        movies_random_id = random.sample(list(Movies.objects.values_list("id", flat=True)), 6)
-        tvshows_random_id = random.sample(list(Tvshows.objects.values_list("id", flat=True)), 6)
         context['movies'] = Movies.objects.order_by('-id')[:6]
         context['tvshows'] = Tvshows.objects.order_by('-id')[:6]
-        context['random_movies'] = Movies.objects.filter(id__in=movies_random_id)
-        context['random_tvshows'] = Tvshows.objects.filter(id__in=tvshows_random_id)
+
+        context['action_movies'] = Movies.objects.filter(genre="Action").order_by('-id')[:6]
+        context['animation_movies'] = Movies.objects.filter(genre="Animation").order_by('-id')[:6]
+        context['drama_movies'] = Movies.objects.filter(genre="Drama").order_by('-id')[:6]
+        context['horror_movies'] = Movies.objects.filter(genre="Horror").order_by('-id')[:6]
+
+        # context['action_tvshows'] = Tvshows.objects.filter(genre="Action").order_by('-id')[:6]
+        # context['animation_tvshows'] = Tvshows.objects.filter(genre="Animation").order_by('-id')[:6]
+        # context['drama_tvshows'] = Tvshows.objects.filter(genre="Drama").order_by('-id')[:6]
+        # context['horror_tvshows'] = Tvshows.objects.filter(genre="Horror").order_by('-id')[:6]
+
         context['slide_movies'] = Movies.objects.order_by('-id')[:2]
         context['slide_tvshows'] = Tvshows.objects.order_by('-id')[:2]
         return render(request, self.template_name, context)
